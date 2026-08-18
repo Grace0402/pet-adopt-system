@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmbeast.mapper.PetTypeMapper">
+
+    <insert id="save">
+        INSERT INTO pet_type (id, name)
+        VALUES (#{id}, #{name})
+    </insert>
+
+    <update id="update">
+        UPDATE pet_type
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+
+        </set>
+
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM pet_type
+        WHERE id = #{id}
+    </delete>
+
+    <!--查询数据总项-->
+    <select id="query" resultMap="BaseResultMap" parameterType="com.kmbeast.pojo.dto.PetTypeQueryDto">
+
+        SELECT pt.id,pt.name
+        FROM pet_type pt
+        <where>
+            <if test="name != null and name != ''">
+                AND pt.name LIKE concat('%',#{name},'%')
+            </if>
+
+        </where>
+
+        <if test="current != null and size= != null">
+            LIMIT #{current},#{size}
+        </if>
+
+    </select>
+
+    <!--满足分页条件的数据总项-->
+    <select id="queryCount" resultType="integer">
+
+        SELECT COUNT(*)
+        FROM pet_type pt
+        <where>
+            <if test="name != null and name != ''">
+                AND pt.name LIKE concat('%',#{name},'%')
+            </if>
+
+        </where>
+
+    </select>
+
+    <select id="queryByName" resultMap="BaseResultMap">
+        SELECT pt.id, pt.name
+        FROM pet_type pt
+        WHERE pt.name = #{name}
+    </select>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kmbeast.pojo.entity.PetType">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+
+</mapper>

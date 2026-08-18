@@ -1,0 +1,27 @@
+# ===== 依赖 / 构建产物（禁止上传） =====
+node_modules/
+dist/
+build/
+target/
+
+# ===== IDE 配置 =====
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# ===== 环境变量 / 密钥（安全第一） =====
+.env
+.env.*
+*.local
+
+# ===== 日志 =====
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== 系统 / 临时文件 =====
+.DS_Store
+Thumbs.db
+*.tmp

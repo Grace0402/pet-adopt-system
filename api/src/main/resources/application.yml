@@ -1,0 +1,26 @@
+# 服务配置
+server:
+  port: 21090
+  servlet:
+    context-path: /api/v1.0/pet-adopt-api
+# API地址前缀，用于接口拦截放行
+my-server:
+  api-context-path: /api/v1.0/pet-adopt-api
+#MySQL与文件上传限制配置
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pet_adopt_system?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: CHANGEME
+# 让 Mybatis 在 Mapper目录下找到 XML 映射文件
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+
+
+

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmbeast.mapper.UserMapper">
+
+    <insert id="save" parameterType="com.kmbeast.pojo.entity.User">
+        INSERT INTO user (account, username, password, avatar, email,
+                          role, gender, birthday, phone, create_time)
+        VALUES (#{account}, #{username}, #{password}, #{avatar}, #{email},
+                #{role}, #{gender}, #{birthday}, #{phone},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.kmbeast.pojo.entity.User">
+        UPDATE user
+        <set>
+            <if test="account != null">account = #{account},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="role != null">role = #{role},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="phone != null">phone = #{phone},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="batchDelete" parameterType="list">
+        DELETE FROM user WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getUserById" resultMap="BaseResultMap">
+        SELECT u.*
+        FROM user u
+        WHERE u.id = #{id}
+    </select>
+
+    <select id="getUserByAccount" resultMap="BaseResultMap">
+        SELECT u.*
+        FROM user u
+        WHERE u.account = #{account}
+    </select>
+
+    <select id="getUserByUsername" resultMap="BaseResultMap">
+        SELECT u.*
+        FROM user u
+        WHERE u.username = #{username}
+    </select>
+
+    <select id="query" resultMap="BaseResultMap">
+        SELECT u.* FROM user u
+        <where>
+            <if test="account != null and account != ''">
+                AND u.account LIKE concat('%',#{account},'%')
+            </if>
+            <if test="username != null and username != ''">
+                AND u.username LIKE concat('%',#{username},'%')
+            </if>
+            <if test="email != null and email != ''">
+                AND u.email LIKE concat('%',#{email},'%')
+            </if>
+            <if test="role != null">
+                AND u.role = #{role}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND u.create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        ORDER BY u.id DESC
+        <if test="current != null and size != null">
+            LIMIT #{current},#{size}
+        </if>
+    </select>
+
+    <!--满足分页条件的数据总项-->
+    <select id="queryCount" resultType="integer">
+
+        SELECT COUNT(*)
+        FROM user u
+        <where>
+            <if test="account != null and account != ''">
+                AND u.account LIKE concat('%',#{account},'%')
+            </if>
+            <if test="username != null and username != ''">
+                AND u.username LIKE concat('%',#{username},'%')
+            </if>
+            <if test="email != null and email != ''">
+                AND u.email LIKE concat('%',#{email},'%')
+            </if>
+            <if test="role != null">
+                AND u.role = #{role}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND u.create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+
+    </select>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kmbeast.pojo.entity.User">
+        <id column="id" property="id"/>
+        <result column="account" property="account"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="avatar" property="avatar"/>
+        <result column="email" property="email"/>
+        <result column="role" property="role"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="phone" property="phone"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+
+</mapper>

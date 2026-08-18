@@ -1,0 +1,95 @@
+/* 代码块基础样式 */
+.markdown-content pre {
+    background-color: #1d1d1d !important;
+    border-radius: 8px !important;
+    margin: 1em 0;
+    overflow: auto;
+    position: relative;
+
+    /* 代码内容样式 */
+    code {
+        display: block;
+        white-space: pre;
+        padding: 1em;
+        line-height: 1.5;
+        color: inherit;
+        background-color: transparent;
+    }
+}
+
+/* 带行号的代码块 */
+pre[class*="language-"].line-numbers {
+    position: relative;
+    padding-left: 3em !important;
+    counter-reset: linenumber;
+    overflow: visible;
+
+    /* 行号容器 */
+    .line-numbers-rows {
+        position: absolute;
+        top: 0;
+        left: -3.8em;
+        width: 3em;
+        height: 100%;
+        box-sizing: border-box;
+        font-size: 100%;
+        letter-spacing: -1px;
+        border-right: 1px solid #4d5355;
+        user-select: none;
+        pointer-events: none;
+        background-color: transparent;
+        padding-top: 1em;
+        /* 与代码内容对齐 */
+
+        /* 行号样式 */
+        >span {
+            display: block;
+            counter-increment: linenumber;
+            height: 1.5em;
+            line-height: 1.5em;
+
+            &::before {
+                content: counter(linenumber);
+                color: #8e8e8f !important;
+                display: block;
+                padding-right: 0.8em;
+                text-align: right;
+            }
+        }
+    }
+
+    /* 代码内容特殊处理 */
+    code {
+        padding: 1em !important;
+        white-space: pre !important;
+        display: block !important;
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .markdown-content {
+        width: 90%;
+
+        pre {
+            width: 250px !important;
+        }
+
+        img {
+            height: 200px !important;
+        }
+    }
+
+    pre[class*="language-"].line-numbers {
+        padding-left: 3.2em !important;
+
+        .line-numbers-rows {
+            left: -3.2em;
+            width: 2.8em;
+
+            >span::before {
+                padding-right: 0.6em;
+            }
+        }
+    }
+}
