@@ -6,7 +6,7 @@ const ENV = process.env.NODE_ENV
 const BASE_URL_MAP = {
   development: 'http://localhost:21090/api/v1.0/pet-adopt-api', // 开发环境
   test: 'http://test-api.example.com/api', // 测试环境
-  production: 'https://api.example.com/v1' // 生产环境
+  production: 'http://localhost:21090/api/v1.0/pet-adopt-api' // 生产环境
 }
 
 // 创建实例

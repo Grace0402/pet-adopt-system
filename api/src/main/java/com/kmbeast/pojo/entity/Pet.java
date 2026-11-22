@@ -40,6 +40,10 @@ public class Pet {
      */
     private Integer age;
     /**
+     * 宠物性别（0：公；1：母）
+     */
+    private Integer gender;
+    /**
      * 宠物类别ID，外键，关联的是宠物类别表
      */
     private Integer petTypeId;
@@ -52,7 +56,7 @@ public class Pet {
      */
     private Boolean isRecommend;
     /**
-     * 是否推荐（0：未领养；1：已领养）
+     * 是否领养（0：未领养；1：已领养）
      */
     private Boolean isAdopt;
     /**

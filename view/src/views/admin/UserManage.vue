@@ -80,7 +80,7 @@
             <div class="user-avatar">
               <p>点击📷处即可上传头像</p>
               <img v-if="avatar" :src="avatar || ''" alt="">
-              <el-upload class="avatar-uploader" action="api/v1.0/pet-adopt-api/file/upload" :show-file-list="false"
+              <el-upload class="avatar-uploader" action="http://localhost:21090/api/v1.0/pet-adopt-api/file/upload" :show-file-list="false"
                 :on-success="handleImageSuccess">
                 <i class="el-icon-camera-solid"></i>
               </el-upload>

@@ -11,9 +11,7 @@
         UPDATE pet_type
         <set>
             <if test="name != null and name != ''">name = #{name},</if>
-
         </set>
-
         WHERE id = #{id}
     </update>
 
@@ -32,10 +30,8 @@
             <if test="name != null and name != ''">
                 AND pt.name LIKE concat('%',#{name},'%')
             </if>
-
         </where>
-
-        <if test="current != null and size= != null">
+        <if test="current != null and size != null">
             LIMIT #{current},#{size}
         </if>
 
@@ -50,7 +46,6 @@
             <if test="name != null and name != ''">
                 AND pt.name LIKE concat('%',#{name},'%')
             </if>
-
         </where>
 
     </select>
@@ -59,6 +54,12 @@
         SELECT pt.id, pt.name
         FROM pet_type pt
         WHERE pt.name = #{name}
+    </select>
+
+    <select id="petTypeCount" resultType="com.kmbeast.pojo.vo.ChartVO">
+        SELECT pt.name,
+               (SELECT COUNT(p.id) FROM pet p WHERE p.pet_type_id = pt.id) AS `count`
+        FROM pet_type pt
     </select>
 
     <!-- 通用查询映射结果 -->

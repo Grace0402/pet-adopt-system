@@ -1,5 +1,8 @@
 package com.kmbeast.pojo.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,11 +16,13 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName(value = "active_net") // 标识对应的数据库表
 public class ActiveNet {
 
     /**
      * 行为互动信息表主键ID
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
     /**
      * 用户ID，外键，关联的是用户表

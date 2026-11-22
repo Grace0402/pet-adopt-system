@@ -15,20 +15,41 @@ import java.util.List;
 public class DateUtil {
 
     /**
-     * 构造时间查询器，即指定的开始时间、结束时间
+     * 构造时间范围查询器
      *
-     * @param days 时间范围
-     * @return PagerDTO
+     * @param days 查询天数范围：
+     *             -1 = 查询全部（不设时间范围）
+     *             0 = 今天
+     *             1 = 昨天到今天
+     *             n = 过去n天到现在
+     * @return 包含开始时间和结束时间的QueryDto对象
      */
     public static QueryDto startAndEndTime(Integer days) {
-        // 查全部
+        // 处理查询全部的情况
         if (days == -1) {
-            return new QueryDto();
+            return new QueryDto(); // 返回无时间限制的查询
         }
+
+        // 验证参数有效性
+        if (days < 0) {
+            throw new IllegalArgumentException("天数参数不能为负数（除-1外）");
+        }
+
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime nextDayStart = now.minusDays(days).plusDays(1).with(LocalTime.of(0, 0)); // 下一天的开始时间
-        LocalDateTime daysAgoEnd = nextDayStart.minusSeconds(1);
-        return QueryDto.builder().startTime(daysAgoEnd).endTime(now).build();
+        LocalDateTime startTime;
+
+        if (days == 0) {
+            // 今天的情况
+            startTime = now.with(LocalTime.MIN); // 当天00:00:00
+        } else {
+            // 计算n天前的00:00:00
+            startTime = now.minusDays(days).with(LocalTime.MIN);
+        }
+
+        return QueryDto.builder()
+                .startTime(startTime)
+                .endTime(now)
+                .build();
     }
 
     /**
@@ -47,8 +68,10 @@ public class DateUtil {
             int count = (int) dates.stream()
                     .filter(dateTime -> dateTime.toLocalDate().equals(currentDate))
                     .count();
-            if (count != 0){
-                chartVOS.add(new ChartVO(dateKey, count));
+            if (count != 0) {
+                // 为了数据更好看，在原始的数据之上，添加一个随机数
+//                chartVOS.add(new ChartVO(dateKey, count * new Random().nextInt(10000)));
+                chartVOS.add(new ChartVO(dateKey, count)); //这是原始的数据，不想要上述模拟效果，只需要将上一行代码注释掉，这一行放开即可
             }
         }
         return chartVOS;

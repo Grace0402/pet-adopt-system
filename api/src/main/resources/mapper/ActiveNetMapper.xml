@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmbeast.mapper.ActiveNetMapper">
+
+    <select id="listChart" resultMap="BaseResultMap">
+
+        SELECT id, create_time
+        FROM active_net
+        <where>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="contentId != null">
+                AND content_id = #{contentId}
+            </if>
+            <if test="contentType != null and contentType !=''">
+                AND content_type = #{contentType}
+            </if>
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        <if test="current != null and size != null">
+            LIMIT #{current},#{size}
+        </if>
+
+    </select>
+
+
+    <select id="query" resultMap="BaseResultMap">
+
+        SELECT id, user_id, content_id, type, create_time, content_type
+        FROM active_net
+        <where>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="contentId != null">
+                AND content_id = #{contentId}
+            </if>
+            <if test="contentType != null and contentType !=''">
+                AND content_type = #{contentType}
+            </if>
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        <if test="current != null and size != null">
+            LIMIT #{current},#{size}
+        </if>
+
+    </select>
+
+    <!--满足分页条件的数据总项-->
+    <select id="queryCount" resultType="integer">
+
+        SELECT COUNT(*)
+        FROM active_net
+        <where>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="contentId != null">
+                AND content_id = #{contentId}
+            </if>
+            <if test="contentType != null and contentType !=''">
+                AND content_type = #{contentType}
+            </if>
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+
+    </select>
+    <select id="queryScore" resultType="com.kmbeast.pojo.vo.ScoreVO">
+        SELECT user_id    AS 'userId',
+               content_id AS 'contentId',
+               SUM(
+                       CASE
+                           WHEN type = 1 THEN 1 -- 浏览(VIEW)得1分
+                           WHEN type = 2 THEN 1 -- 点赞(UPVOTE)得1分
+                           WHEN type = 3 THEN 3 -- 收藏(SAVE)得3分
+                           ELSE 0
+                           END
+               )          AS 'score'
+        FROM active_net
+        WHERE content_type = #{contentType}
+        GROUP BY user_id, content_id
+        ORDER BY user_id, content_id;
+    </select>
+
+    <select id="queryAllIds" resultType="com.kmbeast.pojo.vo.ScoreVO">
+        SELECT an.content_id,
+               COUNT(an.id) AS score
+        FROM active_net an
+        WHERE an.content_type = #{contentType}
+          AND an.type = #{type}
+        GROUP BY content_id
+        ORDER BY score desc
+        LIMIT 0, #{count}
+    </select>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kmbeast.pojo.entity.ActiveNet">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="content_id" property="contentId"/>
+        <result column="type" property="type"/>
+        <result column="content_type" property="contentType"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+
+</mapper>

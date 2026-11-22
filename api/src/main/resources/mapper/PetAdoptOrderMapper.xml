@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmbeast.mapper.PetAdoptOrderMapper">
+
+    <!--查询数据总项-->
+    <select id="list" resultMap="BaseResultMap">
+
+        SELECT
+        pao.id,
+        pao.user_id,
+        pao.pet_id,
+        pao.address_id,
+        pao.detail,
+        pao.status,
+        pao.audit_error_detail,
+        pao.is_again_post,
+        pao.post_number,
+        pao.create_time,
+        u.username,
+        u.avatar,
+        p.name AS pet_name,
+        p.cover,
+        a.addressee,
+        a.concat_phone,
+        a.detail AS detail_address
+        FROM pet_adopt_order pao
+        LEFT JOIN user u ON u.id = pao.user_id
+        LEFT JOIN pet p ON p.id = pao.pet_id
+        LEFT JOIN address a ON a.id = pao.address_id
+        <where>
+            <if test="userId != null">
+                AND pao.user_id = #{userId}
+            </if>
+            <if test="petId != null">
+                AND pao.pet_id = #{petId}
+            </if>
+            <if test="status != null">
+                AND pao.status = #{status}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND pao.create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        <if test="current != null and size != null">
+            LIMIT #{current},#{size}
+        </if>
+
+    </select>
+
+    <!--满足分页条件的数据总项-->
+    <select id="listCount" resultType="integer">
+
+        SELECT COUNT(*)
+        FROM pet_adopt_order pao
+        <where>
+            <if test="userId != null">
+                AND pao.user_id = #{userId}
+            </if>
+            <if test="petId != null">
+                AND pao.pet_id = #{petId}
+            </if>
+            <if test="status != null">
+                AND pao.status = #{status}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND pao.create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+
+    </select>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kmbeast.pojo.vo.PetAdoptOrderVO">
+        <!--订单基本信息-->
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="detail" property="detail"/>
+        <result column="addressee" property="addressee"/>
+        <result column="concat_phone" property="concatPhone"/>
+        <result column="status" property="status"/>
+        <result column="audit_error_detail" property="auditErrorDetail"/>
+        <result column="is_again_post" property="isAgainPost"/>
+        <result column="post_number" property="postNumber"/>
+        <result column="create_time" property="createTime"/>
+
+        <!--用戶基本信息-->
+        <result column="username" property="username"/>
+        <result column="avatar" property="avatar"/>
+
+        <!--宠物基本信息-->
+        <result column="pet_name" property="petName"/>
+        <result column="cover" property="cover"/>
+
+        <!--收货地址信息-->
+        <result column="addressee" property="addressee"/>
+        <result column="concat_phone" property="concatPhone"/>
+        <result column="detail_address" property="detailAddress"/>
+    </resultMap>
+
+</mapper>

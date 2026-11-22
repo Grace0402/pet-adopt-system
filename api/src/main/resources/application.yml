@@ -16,10 +16,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/pet_adopt_system?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     username: root
-    password: CHANGEME
-# 让 Mybatis 在 Mapper目录下找到 XML 映射文件
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
+    password: CHANGEME # TODO: 改成你的 MySQL root 密码
+# MybatisPlus配置
+mybatis-plus:
+  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 开启日志
+    map-underscore-to-camel-case: true # 开启驼峰命名
+  global-config:
+    db-config:
+      id-type: auto # 主键策略
+  mapper-locations: classpath*:/mapper/**/*.xml # mapper文件位置
 
 
 

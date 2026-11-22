@@ -148,7 +148,6 @@
 
 <script>
 import { timeAgo } from '@/utils/date'
-import { getUserInfo } from "@/utils/storage"
 export default {
     props: {
         contentId: {
@@ -176,7 +175,6 @@ export default {
             replyContent: '',
             replyChildContent: '',
             isFocused: false,
-            userId: null,
             evaluationsCount: 0,
             upvoteAnimate: null,
             showDeleteModal: false,
@@ -196,7 +194,6 @@ export default {
         },
     },
     created() {
-        this.getBasicInfo();
         this.loadCommentList();
     },
     methods: {
@@ -223,7 +220,7 @@ export default {
             this.showDeleteModal = false;
         },
         deleteComment(comment) {
-            this.$axios.delete(`evaluations/delete/${comment.id}`).then(res => {
+            this.$axios.delete(`evaluations/${comment.id}`).then(res => {
                 if (res.code == 200) {
                     this.showToast('删除成功', 'success');
                     this.loadCommentList();

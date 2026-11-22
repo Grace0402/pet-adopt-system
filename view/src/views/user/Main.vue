@@ -4,15 +4,19 @@
         <header class="app-header">
             <div class="header-content">
                 <div class="main-nav">
-                    <Logo class="logo" logoSize="20" fontSize="18" textColor="rgb(51,51,51)" sysName="脚手架" />
+                    <Logo class="logo" :logoSize="Number(46)" :fontSize="Number(20)" textColor="rgb(51,51,51)" sysName="宠物领养系统" />
+                </div>
+                <nav class="main-nav">
                     <router-link v-for="item in navItems" :key="item.path" :to="item.path" class="nav-item"
                         active-class="active" @click="closeMobileMenu">
                         <i style="margin-right: 6px;" :class="item.icon"></i>
                         {{ item.title }}
                     </router-link>
-                </div>
-                <nav class="main-nav">
-
+                    <!-- 发布宠物经验帖子按钮 -->
+                    <div @click="goPetPost" class="publish-pet-post">
+                        <i class="el-icon-document"></i>
+                        分享经验
+                    </div>
                     <el-dropdown trigger="click">
                         <span class="user-dropdown-trigger">
                             <div class="user-info">
@@ -22,11 +26,20 @@
                             </div>
                         </span>
                         <el-dropdown-menu slot="dropdown" class="user-dropdown">
+                            <el-dropdown-item @click.native="center" icon="el-icon-s-data">
+                                创作中心
+                            </el-dropdown-item>
+                            <el-dropdown-item @click.native="address" icon="el-icon-s-ticket">
+                                收货地址
+                            </el-dropdown-item>
                             <el-dropdown-item @click.native="updateUserInfo" icon="el-icon-user-solid">
-                                修改个人信息
+                                修改信息
                             </el-dropdown-item>
                             <el-dropdown-item @click.native="dialogPasswordOperation = true" icon="el-icon-finished">
                                 修改密码
+                            </el-dropdown-item>
+                            <el-dropdown-item @click.native="proposal" icon="el-icon-connection">
+                                意见反馈
                             </el-dropdown-item>
                             <el-dropdown-item @click.native="dialogOutOperation = true" icon="el-icon-s-fold">
                                 退出登录
@@ -90,7 +103,7 @@
                             <p>点击📷处即可上传头像</p>
                             <img v-if="avatar" :src="avatar || ''" alt="用户头像" class="user-avatar-large">
                             <el-upload style="margin-left: 20px;" class="avatar-uploader"
-                                action="api/v1.0/pet-adopt-api/file/upload" :show-file-list="false"
+                                action="http://localhost:21090/api/v1.0/pet-adopt-api/file/upload" :show-file-list="false"
                                 :on-success="handleImageSuccess">
                                 <i class="el-icon-camera-solid upload-icon"></i>
                             </el-upload>
@@ -170,7 +183,10 @@ export default {
             dialogUserInfoVisible: false, // 修改信息弹窗开关
             dialogOutOperation: false, // 退出登录弹窗控制开关
             navItems: [
-                { path: '/home', icon: '', title: '首页' },
+                { path: '/pet-list', icon: '', title: '宠物大厅' },
+                { path: '/pet-post', icon: 'el-icon-s-help', title: '养宠经验' },
+                { path: '/my-pet-adopt-order', icon: 'el-icon-tickets', title: '宠物领养订单' },
+                 { path: '/notice', icon: '', title: '公告' },
             ],
             userInfo: {},
             isAuthChecked: false,
@@ -186,6 +202,22 @@ export default {
         }
     },
     methods: {
+        // 加载意见与反馈中心
+        proposal() {
+            this.$router.push('/proposal-feedback');
+        },
+        center() {
+            // 加载创作中心页面
+            this.$router.push('/pet-post-user');
+        },
+        address() {
+            // 加载收货地址页面
+            this.$router.push('/address');
+        },
+        // 跳转至宠物经验帖子发布页
+        goPetPost() {
+            window.open('/create-pet-post', '_blank');
+        },
         // 性别选择切换
         handleGenderChange(obj) {
             this.apiParam.gender = Number(obj.value);
@@ -287,10 +319,10 @@ export default {
         initRouteHandling() {
             this.setupRouteWatcher();
             if (!this.isValidRoute(this.$route.path)) {
-                this.$router.replace('/home');
+                this.$router.replace('/pet-list');
             }
             if (this.$route.path === '/') {
-                this.$router.replace('/home');
+                this.$router.replace('/pet-list');
             }
         },
         isValidRoute(path) {
@@ -320,17 +352,30 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.publish-pet-post {
+    background-color: rgb(26, 147, 62);
+    color: rgb(255, 255, 255);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgb(26, 134, 58);
+    }
+}
+
 .app-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: rgb(255,255,255);
+    background-color: rgb(255, 255, 255);
     overflow-x: hidden;
 }
 
 .app-header {
     background-color: rgb(255, 255, 255);
-    padding-inline: 120px;
+    padding-inline: 100px;
     margin-bottom: 10px;
     z-index: 100;
     position: sticky;

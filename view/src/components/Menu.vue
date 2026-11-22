@@ -3,7 +3,7 @@
 		<!-- Logo -->
 		<div class="logo">
 			<img src="/logo.png" alt="" srcset="">
-			<span>脚手架</span>
+			<span>宠物领养系统</span>
 		</div>
 		<!-- 导航区 -->
 		<ul class="menu" :style="{ backgroundColor: bag, padding: '12px 6px' }">

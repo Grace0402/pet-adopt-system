@@ -83,7 +83,6 @@ public class EvaluationsController {
      *
      * @return Result<String>
      */
-
     @DeleteMapping(value = "/{id}")
     @ResponseBody
     public Result<String> delete(@PathVariable Integer id) {

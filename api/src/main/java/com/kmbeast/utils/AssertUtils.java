@@ -4,6 +4,8 @@ import com.kmbeast.exception.BusinessException;
 
 /**
  * 断言工具类
+ *
+ * @author B站「程序员辰星」原创出品
  */
 public class AssertUtils {
 
@@ -36,6 +38,7 @@ public class AssertUtils {
      *
      * @param expression 布尔表达式
      * @param message    错误信息
+     * @author B站->「程序员 辰星」原创出品
      */
     public static void isTrue(boolean expression, String message) {
         if (!expression) {

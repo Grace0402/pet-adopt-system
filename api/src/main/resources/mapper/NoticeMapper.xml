@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmbeast.mapper.NoticeMapper">
+
+    <!--查询数据总项-->
+    <select id="list" resultMap="BaseResultMap">
+
+        SELECT id, title, create_time
+        FROM notice n
+        <where>
+            <if test="title != null and title != ''">
+                AND n.title LIKE concat('%',#{title},'%')
+            </if>
+        </where>
+        <if test="current != null and size != null">
+            LIMIT #{current},#{size}
+        </if>
+
+    </select>
+
+    <!--满足分页条件的数据总项-->
+    <select id="listCount" resultType="integer">
+
+        SELECT COUNT(*)
+        FROM notice n
+        <where>
+            <if test="title != null and title != ''">
+                AND n.title LIKE concat('%',#{title},'%')
+            </if>
+        </where>
+
+    </select>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kmbeast.pojo.vo.NoticeListItemVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+</mapper>

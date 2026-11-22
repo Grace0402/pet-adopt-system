@@ -103,7 +103,7 @@ export default {
     overflow: hidden;
 
     .main-carousel {
-        border-radius: 20px;
+        // border-radius: 20px;
         position: relative;
         width: 100%;
         height: 100%;

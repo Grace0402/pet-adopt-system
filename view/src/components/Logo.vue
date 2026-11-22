@@ -28,7 +28,7 @@ export default {
   props: {
     sysName: {
       type: String,
-      default: '一路旅友'
+      default: ''
     },
     collapsed: {
       type: Boolean,

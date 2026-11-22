@@ -1,8 +1,5 @@
 package com.kmbeast.controller;
 
-import com.kmbeast.pojo.api.ApiResult;
-import com.kmbeast.pojo.api.Result;
-import com.kmbeast.pojo.vo.ChartVO;
 import com.kmbeast.utils.PathUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

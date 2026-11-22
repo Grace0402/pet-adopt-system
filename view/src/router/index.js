@@ -19,6 +19,41 @@ const routes = [
     component: () => import(`@/views/view/Index.vue`)
   },
   {
+    path: "/pet-detail",
+    name: 'petDetail',
+    component: () => import(`@/views/user/PetDetail.vue`)
+  },
+  {
+    path: "/pet-detail-admin",
+    name: 'petDetail',
+    component: () => import(`@/views/admin/ViewPetDetailAdmin.vue`)
+  },
+  {
+    path: "/view-pet-detail",
+    name: 'viewPetDetail',
+    component: () => import(`@/views/user/ViewPetDetail.vue`)
+  },
+  {
+    path: "/notice-detail",
+    name: 'noticeDetail',
+    component: () => import(`@/views/user/NoticeDetail.vue`)
+  },
+  {
+    path: "/pet-post-detail",
+    name: 'petPostDetail',
+    component: () => import(`@/views/user/PetPostDetail.vue`)
+  },
+  {
+    path: "/create-pet-post",
+    name: 'createPetPost',
+    component: () => import(`@/views/user/CreatePetPost.vue`)
+  },
+  {
+    path: "/update-pet-post",
+    name: 'updatePetPost',
+    component: () => import(`@/views/user/UpdatePetPost.vue`)
+  },
+  {
     path: "/login",
     name: 'login',
     component: () => import(`@/views/login/Login.vue`)
@@ -51,6 +86,54 @@ const routes = [
         meta: { requireAuth: true },
       },
       {
+        path: "/pet-manage",
+        name: '宠物管理',
+        show: true,
+        icon: 'el-icon-s-help',
+        component: () => import(`@/views/admin/PetManage.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/pet-type-manage",
+        name: '宠物类别管理',
+        show: true,
+        icon: 'el-icon-s-data',
+        component: () => import(`@/views/admin/PetTypeManage.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/pet-post-manage",
+        name: '宠物经验帖子管理',
+        show: true,
+        icon: 'el-icon-attract',
+        component: () => import(`@/views/admin/PetPostManage.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/pet-adopt-order-manage",
+        name: '宠物领养订单管理',
+        show: true,
+        icon: 'el-icon-document',
+        component: () => import(`@/views/admin/PetAdoptOrderManage.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/notice-manage",
+        name: '公告管理',
+        show: true,
+        icon: 'el-icon-document',
+        component: () => import(`@/views/admin/NoticeManage.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/proposal-feedback-manage",
+        name: '意见与反馈',
+        show: true,
+        icon: 'el-icon-c-scale-to-original',
+        component: () => import(`@/views/admin/ProposalFeedbackManage.vue`),
+        meta: { requireAuth: true },
+      },
+      {
         path: "/evaluations-manage",
         name: '评论管理',
         show: true,
@@ -75,9 +158,45 @@ const routes = [
     },
     children: [
       {
-        path: "/home",
-        name: '首页',
-        component: () => import(`@/views/user/Home.vue`),
+        path: "/pet-list",
+        name: '宠物大厅',
+        component: () => import(`@/views/user/PetList.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/pet-post",
+        name: '养宠经验',
+        component: () => import(`@/views/user/PetPost.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/pet-post-user",
+        name: '创作中心',
+        component: () => import(`@/views/user/PetPostUser.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/address",
+        name: '收货地址',
+        component: () => import(`@/views/user/Address.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/notice",
+        name: '公告',
+        component: () => import(`@/views/user/Notice.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/my-pet-adopt-order",
+        name: '宠物领养订单',
+        component: () => import(`@/views/user/MyPetAdoptOrder.vue`),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "/proposal-feedback",
+        name: '意见与反馈',
+        component: () => import(`@/views/user/ProposalFeedback.vue`),
         meta: { requireAuth: true },
       },
     ]
