@@ -25,7 +25,3 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 *.tmp
-
-# ===== 运行时上传文件（非源码，禁止上传） =====
-api/file/
-api/src/main/resources/application.yml
